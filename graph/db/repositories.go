@@ -26,7 +26,7 @@ type Repository struct {
 	ID        string `boil:"id" json:"id" toml:"id" yaml:"id"`
 	Owner     string `boil:"owner" json:"owner" toml:"owner" yaml:"owner"`
 	Name      string `boil:"name" json:"name" toml:"name" yaml:"name"`
-	CreatedAt string `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
+	CreatedAt time.Time `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
 
 	R *repositoryR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L repositoryL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -993,12 +993,11 @@ func (o *Repository) Insert(ctx context.Context, exec boil.ContextExecutor, colu
 
 	var err error
 	if !boil.TimestampsAreSkipped(ctx) {
-		// currTime := time.Now().In(boil.GetLocation())
+		currTime := time.Now().In(boil.GetLocation())
 
-
-		// // if queries.MustTime(o.CreatedAt).IsZero() {
-		// // 	queries.SetScanner(&o.CreatedAt, currTime)
-		// // }
+		if o.CreatedAt.IsZero() {
+			o.CreatedAt = currTime
+		}
 	}
 
 	if err := o.doBeforeInsertHooks(ctx, exec); err != nil {
@@ -1206,11 +1205,11 @@ func (o *Repository) Upsert(ctx context.Context, exec boil.ContextExecutor, upda
 		return errors.New("db: no repositories provided for upsert")
 	}
 	if !boil.TimestampsAreSkipped(ctx) {
-	// 	currTime := time.Now().In(boil.GetLocation())
+		currTime := time.Now().In(boil.GetLocation())
 
-	// 	if queries.MustTime(o.CreatedAt).IsZero() {
-	// 		queries.SetScanner(&o.CreatedAt, currTime)
-	// 	}
+		if o.CreatedAt.IsZero() {
+			o.CreatedAt = currTime
+		}
 	}
 
 	if err := o.doBeforeUpsertHooks(ctx, exec); err != nil {
