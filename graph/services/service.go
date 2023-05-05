@@ -19,18 +19,19 @@ type UserService interface {
 
 type RepositoryService interface {
 	GetRepositoryByID(ctx context.Context, id string) (*model.Repository, error)
+	GetRepoByFullName(ctx context.Context, owner, name string) (*model.Repository, error)
 }
 
 type services struct {
 	*userService
-	*repositoryService
+	*repoService
 	// issueテーブルを扱うissueServiceなど、他のサービス構造体ができたらフィールドを追加していく
 }
 
 // ファクトリー関数（オブジェクト生成のために使用される特殊な関数）
 func New(exec boil.ContextExecutor) Services {
 	return &services{
-		userService:       &userService{exec: exec},
-		repositoryService: &repositoryService{exec: exec},
+		userService: &userService{exec: exec},
+		repoService: &repoService{exec: exec},
 	}
 }
