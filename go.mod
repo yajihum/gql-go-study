@@ -5,6 +5,7 @@ go 1.20
 require (
 	github.com/99designs/gqlgen v0.17.30
 	github.com/friendsofgo/errors v0.9.2
+	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	github.com/mattn/go-sqlite3 v1.14.14
 	github.com/vektah/gqlparser/v2 v2.5.1
 	github.com/volatiletech/null/v8 v8.1.2
@@ -19,6 +20,7 @@ require (
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/urfave/cli/v2 v2.24.4 // indirect
