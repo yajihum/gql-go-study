@@ -41,3 +41,13 @@ func (u *userService) GetUserByName(ctx context.Context, name string) (*model.Us
 	// 3. 戻り値の*model.User型を作る
 	return convertUser(user), nil
 }
+
+func (u *userService) GetUserByID(ctx context.Context, id string) (*model.User, error) {
+	user, err := db.FindUser(ctx, u.exec, id,
+		db.UserTableColumns.ID, db.UserTableColumns.Name,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return convertUser(user), nil
+}
